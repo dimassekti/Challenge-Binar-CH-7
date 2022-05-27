@@ -16,11 +16,20 @@ import kotlinx.coroutines.async
 class DetailFilm : AppCompatActivity() {
 
     var filmfavdb : FilmDatabase? = null
+    var id = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_film)
 
+        filmfavdb = FilmDatabase.getInstance(this)
+
+        detailFilm()
+        addFilmFav()
+
+    }
+
+    fun detailFilm(){
         var detailFilm = intent.getParcelableExtra("DETAILFILM") as GetAllFilmItem?
         var detailFilmFav = intent.getParcelableExtra<Film>("DETAILFILMFAV")
 
@@ -37,11 +46,11 @@ class DetailFilm : AppCompatActivity() {
             tv_film_title.text = detailFilmFav!!.name
             Glide.with(this).load(detailFilmFav!!.image).into(iv_film_cover)
         }
+    }
 
-        filmfavdb = FilmDatabase.getInstance(this)
-
-
-//        detailfilm()
+    fun addFilmFav(){
+        var detailFilm = intent.getParcelableExtra("DETAILFILM") as GetAllFilmItem?
+        var detailFilmFav = intent.getParcelableExtra<Film>("DETAILFILMFAV")
 
         iv_addfavfilm.setOnClickListener{
 
@@ -51,7 +60,7 @@ class DetailFilm : AppCompatActivity() {
                 var description = detailFilm!!.description
                 var name = detailFilm!!.name
                 var image = detailFilm!!.image
-                var id = detailFilm!!.id
+                id = detailFilm!!.id
                 var date = detailFilm!!.date
 
                 runOnUiThread {
@@ -62,24 +71,13 @@ class DetailFilm : AppCompatActivity() {
                         Toast.makeText(this@DetailFilm, "gagal", Toast.LENGTH_SHORT).show()
                     }
 
-                    Log.d("tes2", checkdata.toString())
                 }
 
             }
         }
     }
 
-//    fun detailfilm(){
-//        var detailFilm = intent.getParcelableExtra<GetAllFilmItem>("DETAILFILM")
-//
-//        tv_film_director.text = "Director : ${detailFilm!!.director}"
-//        tv_film_synopsis.text = detailFilm!!.description
-//        tv_film_title.text = detailFilm!!.name
-//        Glide.with(this).load(detailFilm!!.image).into(iv_film_cover)
-//    }
 
-    suspend fun addfavfilm(){
 
-//        startActivity(Intent(this, FavouriteActivity::class.java))
-    }
+
 }

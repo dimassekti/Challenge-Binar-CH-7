@@ -29,9 +29,9 @@ class ProfileActivity : AppCompatActivity() {
      var image = ""
      var password = ""
      var username = ""
-     var fullname = ""
+     var name = ""
      var address = ""
-     var dob = ""
+     var age = ""
 
     //kurang image simpan ke datastore
 
@@ -80,9 +80,9 @@ class ProfileActivity : AppCompatActivity() {
         })
 
         userManager.userNama.asLiveData().observe(this, {
-            this@ProfileActivity.fullname = it.toString()
-            if(fullname!!.length > 0 && fullname!!.isNotEmpty()){
-                et_update_name.setText(fullname)
+            this@ProfileActivity.name = it.toString()
+            if(name!!.length > 0 && name!!.isNotEmpty()){
+                et_update_name.setText(name)
             }
         })
 
@@ -94,9 +94,9 @@ class ProfileActivity : AppCompatActivity() {
         })
 
         userManager.userUmur.asLiveData().observe(this, {
-            this@ProfileActivity.dob = it.toString()
-            if(dob!!.length > 0 && dob!!.isNotEmpty()){
-                et_update_umur.setText(dob)
+            this@ProfileActivity.age = it.toString()
+            if(age!!.length > 0 && age!!.isNotEmpty()){
+                et_update_umur.setText(age)
             }
         })
 
@@ -114,12 +114,16 @@ class ProfileActivity : AppCompatActivity() {
                 && et_update_username.text.isNotEmpty()
                 && et_update_name.text.isNotEmpty()){
 
-                val address = et_update_address.text.toString()
-                val age = et_update_umur.text.toString()
-                val username = et_update_username.text.toString()
-                val name = et_update_name.text.toString()
-                val image =  "http://loremflickr.com/640/480"
-                val password = et_update_password.text.toString()
+                address = et_update_address.text.toString()
+                age = et_update_umur.text.toString()
+                username = et_update_username.text.toString()
+                name = et_update_name.text.toString()
+                image =  "https://ecs7.tokopedia.net/img/og_image_default_new.jpg"
+
+                if(et_update_password.text.toString().isNotEmpty()){
+                    password = et_update_password.text.toString()
+                }
+
 
                 userManager.userId.asLiveData().observe(this, {
                     this@ProfileActivity.id = it.toString()
@@ -135,7 +139,7 @@ class ProfileActivity : AppCompatActivity() {
                     .setPositiveButton("YA"){ _: DialogInterface, _: Int ->
                         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
                         userViewModel.updateUser(id.toInt(), username, password, name, address, age.toInt(), image)
-                        Toast.makeText(this, "Update data berhasil", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ProfileActivity, "Update berhasil", Toast.LENGTH_LONG).show()
                         GlobalScope.launch {
                             userManager.saveData(
                                 id,
@@ -151,21 +155,6 @@ class ProfileActivity : AppCompatActivity() {
 
                     }.show()
 
-//                GlobalScope.launch {
-//                    GlobalScope.launch {
-//                        userManager!!.saveData(
-//                            id,
-//                            username,
-//                            password,
-//                            name,
-//                            age,
-//                            image,
-//                            address
-//
-//                        )
-//                    }
-//                }
-                Toast.makeText(this@ProfileActivity, "Update berhasil", Toast.LENGTH_LONG).show()
 
             }else{
                 Toast.makeText(this@ProfileActivity, "Data belum lengkap", Toast.LENGTH_LONG).show()
