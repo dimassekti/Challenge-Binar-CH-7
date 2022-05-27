@@ -108,6 +108,7 @@ class ProfileActivity : AppCompatActivity() {
     fun update(){
         btn_update_profile.setOnClickListener {
 
+
             if (et_update_address.text.isNotEmpty()
                 && et_update_umur.text.isNotEmpty()
                 && et_update_username.text.isNotEmpty()
