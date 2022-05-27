@@ -61,7 +61,7 @@ class UserViewModel : ViewModel(){
         return messageResponse
     }
 
-    fun updateUser(id :Int, username: String,password: String, address: String, image:String, name:String, umur:Int){
+    fun updateUser(id :Int, username: String,password: String, name:String, address: String, umur:Int, image:String){
         FilmApi.instance.updateUser(id.toString(), username, password, name, address, umur, image)
             .enqueue(object : Callback<PostUser>{
                 override fun onResponse(call: Call<PostUser>, response: Response<PostUser>) {

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:padding="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_filmimage"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+        <LinearLayout
+            android:layout_marginHorizontal="15dp"
+            android:orientation="vertical"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_filmtitle"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="Country Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_filmdirector"
+                android:text="Country Capital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btn_favdelete"
+                android:src="@drawable/ic_baseline_delete_24"
+                android:background="@android:color/transparent"
+                android:layout_margin="5dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

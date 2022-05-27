@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.detail_page.DetailFilm">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center"
+            android:id="@+id/iv_film_cover"
+            android:scaleType="fitXY"
+            android:layout_margin="30dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+
+        <TextView
+            android:text="title"
+            android:id="@+id/tv_film_title"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="release date"
+            android:layout_gravity="center"
+            android:id="@+id/tv_film_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="director"
+            android:layout_gravity="center"
+            android:id="@+id/tv_film_director"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/iv_addfavfilm"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:src="@drawable/icons8_love_48"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="synopsis"
+                android:layout_margin="20dp"
+                android:justificationMode="inter_word"
+                android:id="@+id/tv_film_synopsis"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_addfavfilm"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true" />
+
+
+
+</RelativeLayout>

@@ -1,15 +1,19 @@
 package com.coufie.challengechapterseven.view
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.bumptech.glide.Glide
 import com.coufie.challengechapterseven.R
 import com.coufie.challengechapterseven.datastore.UserManager
 import com.coufie.challengechapterseven.network.FilmApi
+import com.coufie.challengechapterseven.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,6 +23,7 @@ import retrofit2.Response
 class ProfileActivity : AppCompatActivity() {
 
     lateinit var userManager: UserManager
+    private lateinit var userViewModel: UserViewModel
 
      var id = ""
      var image = ""
@@ -64,11 +69,6 @@ class ProfileActivity : AppCompatActivity() {
 
     fun initUM(){
 
-        userManager.userId.asLiveData().observe(this, {
-            this@ProfileActivity.id = it.toString()
-//            Toast.makeText(this, "ini $id", Toast.LENGTH_SHORT).show()
-        })
-
 
         userManager.userPassword.asLiveData().observe(this, {
             this@ProfileActivity.password = it.toString()
@@ -96,7 +96,7 @@ class ProfileActivity : AppCompatActivity() {
         userManager.userUmur.asLiveData().observe(this, {
             this@ProfileActivity.dob = it.toString()
             if(dob!!.length > 0 && dob!!.isNotEmpty()){
-                et_update_dob.setText(dob)
+                et_update_umur.setText(dob)
             }
         })
 
@@ -109,29 +109,61 @@ class ProfileActivity : AppCompatActivity() {
         btn_update_profile.setOnClickListener {
 
             if (et_update_address.text.isNotEmpty()
-                && et_update_dob.text.isNotEmpty()
+                && et_update_umur.text.isNotEmpty()
                 && et_update_username.text.isNotEmpty()
                 && et_update_name.text.isNotEmpty()){
 
                 val address = et_update_address.text.toString()
-                val dob = et_update_dob.text.toString()
+                val age = et_update_umur.text.toString()
                 val username = et_update_username.text.toString()
-                val fullname = et_update_name.text.toString()
+                val name = et_update_name.text.toString()
+                val image =  "http://loremflickr.com/640/480"
+                val password = et_update_password.text.toString()
 
-                GlobalScope.launch {
-                    GlobalScope.launch {
+                userManager.userId.asLiveData().observe(this, {
+                    this@ProfileActivity.id = it.toString()
+
+                })
+
+                AlertDialog.Builder(this)
+                    .setTitle("Update data")
+                    .setMessage("Yakin ingin mengupdate data?")
+                    .setNegativeButton("TIDAK"){ dialogInterface : DialogInterface, _: Int ->
+                        dialogInterface.dismiss()
+                    }
+                    .setPositiveButton("YA"){ _: DialogInterface, _: Int ->
+                        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+                        userViewModel.updateUser(id.toInt(), username, password, name, address, age.toInt(), image)
+                        Toast.makeText(this, "Update data berhasil", Toast.LENGTH_SHORT).show()
+                        GlobalScope.launch {
+                            userManager.saveData(
+                                id,
+                                username,
+                                password,
+                                name,
+                                age,
+                                image,
+                                address
+                            )
+                        }
+                        startActivity(Intent(this, HomeActivity::class.java))
+
+                    }.show()
+
+//                GlobalScope.launch {
+//                    GlobalScope.launch {
 //                        userManager!!.saveData(
 //                            id,
 //                            username,
 //                            password,
 //                            name,
-//                            umur.toString(),
-//                            image.toString(),
+//                            age,
+//                            image,
 //                            address
 //
 //                        )
-                    }
-                }
+//                    }
+//                }
                 Toast.makeText(this@ProfileActivity, "Update berhasil", Toast.LENGTH_LONG).show()
 
             }else{
